@@ -33,6 +33,9 @@ prlog4j2="${config_root}/prlog4j2.xml"
 prconfig="${config_root}/prconfig.xml"
 context_xml="${config_root}/context.xml"
 tomcatusers_xml="${config_root}/tomcat-users.xml"
+web_xml="${config_root}/web.xml"
+server_xml="${config_root}/server.xml"
+conf_web_xml="${config_root}/conf.web.xml"
 
 db_username_file="${secret_root}/DB_USERNAME"
 db_password_file="${secret_root}/DB_PASSWORD"
@@ -161,6 +164,28 @@ if [ -e "$prconfig" ]; then
   cp "$prconfig" ${PEGA_DEPLOYMENT_DIR}/WEB-INF/classes/
 else
   echo "No prconfig was specified in ${prconfig}.  Using defaults."
+fi
+
+if [ -e "$web_xml" ]; then
+  echo "Loading prweb web.xml from ${web_xml}...";
+  cp "$web_xml" ${PEGA_DEPLOYMENT_DIR}/WEB-INF/
+else
+  echo "No prweb web.xml was specified in ${web_xml}.  Using defaults."
+fi
+
+
+if [ -e "$server_xml" ]; then
+  echo "Loading server.xml from ${server_xml}...";
+  cp "$server_xml" ${CATALINA_HOME}/conf/
+else
+  echo "No server.xml was specified in ${server_xml}.  Using defaults."
+fi
+
+if [ -e "$conf_web_xml" ]; then
+  echo "Loading tomcat web.xml from ${conf_web_xml}...";
+  cp "$conf_web_xml" ${CATALINA_HOME}/conf/
+else
+  echo "No tomcat web.xml was specified in ${conf_web_xml}.  Using defaults."
 fi
 
 #
